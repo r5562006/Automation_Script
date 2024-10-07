@@ -1,0 +1,17 @@
+import subprocess
+import time
+
+BMC_IP = "your BMC IP"
+USERNAME = "your username"
+PASSWORD = "your password"
+
+for i in range(1, 101):
+    print(f"Power cycle {i}")
+    subprocess.run([
+        "ipmitool", "-I", "lanplus",
+        "-H", BMC_IP,
+        "-U", USERNAME,
+        "-P", PASSWORD,
+        "-C", "17", "power", "cycle"
+    ])
+    time.sleep(5)  # 等待5秒，以確保系統有足夠時間進行重啟
