@@ -1,0 +1,12 @@
+#!/bin/bash
+
+BMC_IP="your BMC IP"
+USERNAME="your username"
+PASSWORD="your password"
+
+for i in {1..100}
+do
+    echo "Power cycle $i"
+    ipmitool -I lanplus -H $BMC_IP -U $USERNAME -P $PASSWORD -C 17 power cycle
+    sleep 5  # waiting for 5 sec, make sure system is boot up
+done
