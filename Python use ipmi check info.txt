@@ -1,0 +1,83 @@
+1. checking SEL log
+import subprocess     #import subprocess / 導入subprocess模組
+
+BMC_IP = "your BMC IP"      #"" enter your BMC IP / "" 輸入你的BMC IP
+
+USERNAME = "your username"      #""enter your username / ""輸入你的username
+
+PASSWORD = "your password"     #""enter your password / ""輸入你的密碼
+
+def check_sel():      #define check_sel(): / 定義一個名為 check_sel():
+    print("Checking System Event Log (SEL)")      #print checking system event log / 輸出Checking system event log
+    subprocess.run(["ipmitool", "-I", "lanplus", "-H", BMC_IP, "-U", USERNAME, "-P", PASSWORD, "sel", "list"])          #subprocess.run ipmitool command / 執行 ipmicommand 的功能
+if __name__ == "__main__":
+    check_sel()              #this condition assure execute this script will use code / 這個條件保證只有在執行此腳本時才會執行接下來的code, 而不是在這個腳本被作為模組導入時執行。
+
+
+
+2. checking Sensor Data Record(SDR)
+import subprocess
+
+BMC_IP = "your BMC IP"
+USERNAME = "your username"
+PASSWORD = "your password"
+
+def check_sdr():
+    print("Checking Sensor Data Record (SDR)")
+    subprocess.run(["ipmitool", "-I", "lanplus", "-H", BMC_IP, "-U", USERNAME, "-P", PASSWORD, "sdr", "list"])
+
+if __name__ == "__main__":
+    check_sdr()
+
+
+3. power on / off / cycle
+import subprocess
+import sys
+
+BMC_IP = "your BMC IP"
+USERNAME = "your username"
+PASSWORD = "your password"
+
+def power_control(action):
+    if action in ["on", "off", "cycle"]:
+        print(f"Powering {action} the server")
+        subprocess.run(["ipmitool", "-I", "lanplus", "-H", BMC_IP, "-U", USERNAME, "-P", PASSWORD, "power", action])
+    else:
+        print("Usage: script.py {on|off|cycle}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: script.py {on|off|cycle}")
+        sys.exit(1)
+    power_control(sys.argv[1])
+
+4. Checking BMC firmware version
+import subprocess
+
+BMC_IP = "your BMC IP"
+USERNAME = "your username"
+PASSWORD = "your password"
+
+def check_bmc_version():
+    print("Checking BMC firmware version")
+    subprocess.run(["ipmitool", "-I", "lanplus", "-H", BMC_IP, "-U", USERNAME, "-P", PASSWORD, "mc", "info"])
+
+if __name__ == "__main__":
+    check_bmc_version()
+
+
+
+5. Reset BMC
+import subprocess
+
+BMC_IP = "your BMC IP"
+USERNAME = "your username"
+PASSWORD = "your password"
+
+def reset_bmc():
+    print("Resetting BMC")
+    subprocess.run(["ipmitool", "-I", "lanplus", "-H", BMC_IP, "-U", USERNAME, "-P", PASSWORD, "mc", "reset", "cold"])
+
+if __name__ == "__main__":
+    reset_bmc()
