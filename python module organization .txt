@@ -1,0 +1,112 @@
+# Python Modules
+
+**math module**
+   Used for mathematical calculations. It provides many specialized mathematical functions, suitable for scientific research and algorithms.
+   ```python
+   import math
+
+   # Calculate square root
+   sqrt_value = math.sqrt(25)
+   print("Square Root:", sqrt_value)
+
+   # Calculate sine value
+   sin_value = math.sin(math.radians(30))
+   print("Sine Value:", sin_value)
+
+re module
+An extension of regular expressions in Python. This module supports almost all regex syntax, essential for text processing.
+
+import re
+
+# Find matching strings
+pattern = r"\d+"
+text = "There are 123 apples and 456 oranges."
+matches = re.findall(pattern, text)
+print("Matches:", matches)
+datetime module
+Used for handling dates and times, this module is very useful.
+
+import datetime
+
+# Get current date and time
+current_datetime = datetime.datetime.now()
+print("Current Date and Time:", current_datetime)
+
+# Format date and time
+formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+print("Formatted Date and Time:", formatted_datetime)
+urllib module
+Used for making network requests, retrieving web page HTML. Web scraping uses this module.
+
+import urllib.request
+
+# Send HTTP GET request
+response = urllib.request.urlopen("URL")
+html = response.read()
+print("HTML Content:", html[:100])
+os module
+Provides functions to interact with the operating system, such as file and directory operations.
+
+import os
+
+# Get current working directory
+current_dir = os.getcwd()
+print("Current Directory:", current_dir)
+
+# List files and subdirectories in the directory
+files_and_dirs = os.listdir(current_dir)
+print("Files and Directories:", files_and_dirs)
+random module
+Used for generating random numbers.
+
+import random
+
+# Generate a random integer
+random_integer = random.randint(1, 10)
+print("Random Integer:", random_integer)
+
+# Randomly select an element from a list
+random_element = random.choice(["apple", "banana", "cherry"])
+print("Random Element:", random_element)
+json module
+Specialized for handling JSON formatted data.
+
+import json
+
+# Convert dictionary to JSON formatted string
+data = {"name": "Alice", "age": 25}
+json_string = json.dumps(data)
+print("JSON String:", json_string)
+
+# Convert JSON formatted string to dictionary
+parsed_data = json.loads(json_string)
+print("Parsed Data:", parsed_data)
+collections module
+Provides additional data containers beyond list and dict, such as defaultdict, Counter, etc.
+
+from collections import defaultdict, Counter
+
+# Create a default dictionary
+word_counts = defaultdict(int)
+words = ["apple", "banana", "apple", "cherry", "banana", "apple"]
+for word in words:
+    word_counts[word] += 1
+print("Word Counts:", word_counts)
+
+# Count the occurrences of elements
+element_counts = Counter(words)
+print("Element Counts:", element_counts)
+csv module
+Specialized for handling Comma-Separated Values (CSV) files.
+
+import csv
+
+# Example code for reading a CSV file (implementation needed)
+sys module
+Provides functions to interact with the Python interpreter, such as accessing command-line arguments.
+
+import sys
+
+# Get command-line arguments
+arguments = sys.argv
+print("Command-line Arguments:", arguments)
