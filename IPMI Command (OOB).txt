@@ -1,0 +1,124 @@
+IPMIcommand 
+
+1. Power status
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) power status
+#lanplus: lanplus is an interface option of the IPMI (Intelligent Platform Management Interface) tool ipmitool.
+For IPMI communication via LAN (Local Area Network). Specifically, lanplus is an encrypted LAN interface based on IPMI v2.0, which provides higher security and functionality, including encrypted message transmission.
+
+power on：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) power on
+
+power off：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) power off
+
+reboot：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) power reset
+
+2. user management
+
+Note: [ChannelNo] field is optional, ChannoNo is 1 or 8; BMC has 2 default users: anonymous user with user id 1, ADMIN user with user id 2; <> field is required. ;: 2 is user permission, 3 is Operator permission, 4 is Administrator permission;
+
+check user info：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) user list [ChannelNo]
+
+add user：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) user set name
+
+password setting：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) user set password
+
+setting user autherization：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) user priv [ChannelNo]
+
+enable/disable user：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) user enable/disable
+
+3. ip setting 
+
+Note: [ChannelNo] field is optional, ChannoNo is 1 (Share Nic network) or 8 (BMC independent management network); to set network parameters, you must first set the IP to static, and then perform other settings. 
+
+check internet info：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) lan print [ChannelNo]
+
+modify IP static / DHCP：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) lan set ipsrc <static/dhcp>
+
+set ip address：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) lan set ipaddr
+
+modify subnet mask：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) lan set netmask
+
+modify default gateway：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) lan set defgw ipaddr <default gateway>
+
+4.SOL function
+
+Note: <9.6/19.2/38.4/57.6/115.2> where 115.2 represents 115200, that is, *1000 is the baud rate.
+
+setting SOL baud rate：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) sol set volatile-bit-rate <9.6/19.2/38.4/57.6/115.2>
+
+open SOL function：
+iipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) sol activate
+
+Disable SOL function
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) sol deactivate
+
+5. Check SEL log
+
+Check SEL log：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) sel list
+
+6. FRU info check
+
+check FRU infomation：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) fru list
+
+7. SDR,Sensor info check
+
+Check SDR Sensor info:
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) sdr
+
+Check Sensor info:
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) sensor list
+
+8.mc(management BMC)Status and control
+
+reboot BMC：
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) mc reset <warm/cold>
+
+9.setting BMC iptables firewall
+
+setting some of section IP can save BMC
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) raw 0x32 0x76 0x01 0x01 ip1(0xa 0xa 0xa 0xa) ip2(0xb 0xb 0xb 0xaxb)
+
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) raw 0x32 0x76 0x09
+
+setting IP can save BMC
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) raw 0x32 0x76 0x00 0x01 ip1(0xa 0xa 0xa 0xa)
+
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) raw 0x32 0x76 0x09
+
+Cancel setting
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) raw 0x32 0x76 0x08
+
+10．get firewall setting
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) raw 0x32 0x77 0x01 0x00
+
+Stop/open some of port
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) raw 0x32 0x76 0x02 0x00/0x01 0x00 (portno)0x22 0x00
+
+cancel some of port setting 
+ipmitool -H (Host, BMC management IP address) -l lanplus -U (BMC login user name) -P (BMC login user name password) raw 0x32 0x76 0x06 0x00/0x01 0x00 (portno)0x22 0x00
+
+if you can't find ipmi device, please load module retry as below 
+如果遇到報找不到ipmi設備，嘗試載入下列模組後重試
+
+modprobe ipmi_watchdog
+modprobe ipmi_poweroff
+modprobe ipmi_devintf
+modprobe ipmi_si
+modprobe ipmi_msghandler
+
+#modprobe can load module 
