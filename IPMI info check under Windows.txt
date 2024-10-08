@@ -1,0 +1,68 @@
+#ipmitool need to put windows first
+
+#Checking system event log
+@echo off
+set BMC_IP=your BMC IP
+set USERNAME=username
+set PASSWORD=password
+
+echo Checking System Event Log (SEL)
+ipmitool.exe -I lanplus -H %BMC_IP% -U %USERNAME% -P %PASSWORD% sel list
+
+
+#Checking Sensor Data Record
+@echo off
+set BMC_IP=your BMC IP
+set USERNAME=username
+set PASSWORD=password
+
+echo Checking Sensor Data Record (SDR)
+ipmitool.exe -I lanplus -H %BMC_IP% -U %USERNAME% -P %PASSWORD% sdr list
+
+
+#power control on / off / cycle
+@echo off
+if "%1" == "" (
+    echo Usage: %0 {on|off|cycle}
+    exit /b 1
+)
+
+set BMC_IP=your BMC IP
+set USERNAME=username
+set PASSWORD=password
+
+if "%1" == "on" (
+    echo Powering on the server
+    ipmitool.exe -I lanplus -H %BMC_IP% -U %USERNAME% -P %PASSWORD% power on
+) else if "%1" == "off" (
+    echo Powering off the server
+    ipmitool.exe -I lanplus -H %BMC_IP% -U %USERNAME% -P %PASSWORD% power off
+) else if "%1" == "cycle" (
+    echo Power cycling the server
+    ipmitool.exe -I lanplus -H %BMC_IP% -U %USERNAME% -P %PASSWORD% power cycle
+) else (
+    echo Invalid command. Usage: %0 {on|off|cycle}
+    exit /b 1
+)
+
+
+
+#checking BMC version
+@echo off
+set BMC_IP=your BMC IP
+set USERNAME=username
+set PASSWORD=password
+
+echo Checking BMC firmware version
+ipmitool.exe -I lanplus -H %BMC_IP% -U %USERNAME% -P %PASSWORD% mc info
+
+
+
+#Resetting BMC
+@echo off
+set BMC_IP=your BMC IP
+set USERNAME=username
+set PASSWORD=password
+
+echo Resetting BMC
+ipmitool.exe -I lanplus -H %BMC_IP% -U %USERNAME% -P %PASSWORD% mc reset cold

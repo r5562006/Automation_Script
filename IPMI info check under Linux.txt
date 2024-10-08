@@ -1,0 +1,66 @@
+#!/bin/bash
+BMC_IP="your BMC IP"
+USERNAME="your username"
+PASSWORD="your password"
+
+echo "Checking System Event Log (SEL)"
+ipmitool -I lanplus -H $BMC_IP -U $USERNAME -P $PASSWORD sel list
+# OOB check systme event log
+
+
+
+#!/bin/bash
+BMC_IP="your BMC IP"
+USERNAME="your username"
+PASSWORD="your password"
+
+echo "Checking Sensor Data Record (SDR)"
+ipmitool -I lanplus -H $BMC_IP -U $USERNAME -P $PASSWORD sdr list
+#OOB check sdr sensor record
+
+
+
+#!/bin/bash
+BMC_IP="your BMC IP"
+USERNAME="your username"
+PASSWORD="your password"
+
+case "$1" in
+    on)
+        echo "Powering on the server"
+        ipmitool -I lanplus -H $BMC_IP -U $USERNAME -P $PASSWORD power on
+        ;;
+    off)
+        echo "Powering off the server"
+        ipmitool -I lanplus -H $BMC_IP -U $USERNAME -P $PASSWORD power off
+        ;;
+    cycle)
+        echo "Power cycling the server"
+        ipmitool -I lanplus -H $BMC_IP -U $USERNAME -P $PASSWORD power cycle
+        ;;
+    *)
+        echo "Usage: $0 {on|off|cycle}"
+        exit 1
+esac
+#OOB control power on / off / power cycle
+
+
+
+#!/bin/bash
+BMC_IP="your BMC IP"
+USERNAME="your username"
+PASSWORD="your password"
+
+echo "Checking BMC firmware version"
+ipmitool -I lanplus -H $BMC_IP -U $USERNAME -P $PASSWORD mc info
+#check bmc version
+
+
+
+#!/bin/bash
+BMC_IP="your BMC IP"
+USERNAME="your username"
+PASSWORD="your password"
+echo "Resetting BMC"
+ipmitool -I lanplus -H $BMC_IP -U $USERNAME -P $PASSWORD mc reset cold
+#BMC reset
